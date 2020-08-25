@@ -7,8 +7,11 @@ Rails.application.routes.draw do
       delete :logout, to: "sessions#logout"
       get :logged_in, to: "sessions#logged_in"
 
-      resources :projects, params: :slug
-      resources :project_categories, only: [:create, :update, :destroy]
+      resources :projects
+      resources :project_categories, param: :slug
+      resources :project_stages, only: [:show, :create]
+      resources :project_milestones, only: [:show, :create]
+      resources :milestone_subtasks, only: [:show, :create]
       get 'claimed_projects', to: 'projects#claimed_projects'
       get 'available_projects', to: 'projects#available_projects'
       get 'completed_projects', to: 'projects#completed_projects'

@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_003247) do
+ActiveRecord::Schema.define(version: 2020_08_25_200318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "milestone_subtasks", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.bigint "project_milestone_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_milestone_id"], name: "index_milestone_subtasks_on_project_milestone_id"
+  end
 
   create_table "project_categories", force: :cascade do |t|
     t.string "title"
@@ -21,6 +30,31 @@ ActiveRecord::Schema.define(version: 2020_08_25_003247) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "project_milestones", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.time "alloted_time"
+    t.time "time_spent"
+    t.bigint "project_id", null: false
+    t.bigint "project_stage_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_project_milestones_on_project_id"
+    t.index ["project_stage_id"], name: "index_project_milestones_on_project_stage_id"
+  end
+
+  create_table "project_stages", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.float "rate"
+    t.boolean "share"
+    t.time "estimated_time"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_project_stages_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -50,5 +84,9 @@ ActiveRecord::Schema.define(version: 2020_08_25_003247) do
     t.integer "status"
   end
 
+  add_foreign_key "milestone_subtasks", "project_milestones"
+  add_foreign_key "project_milestones", "project_stages"
+  add_foreign_key "project_milestones", "projects"
+  add_foreign_key "project_stages", "projects"
   add_foreign_key "projects", "project_categories"
 end

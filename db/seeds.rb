@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 10.times do |n|
-  enum = ['freelancer', 'freelancer', 'freelancer', 'freelancer', 'freelancer', 'freelancer', 'freelancer', 'client', 'client', 'client', 'freelancer']
+  enum = ['freelancer', 'freelancer', 'freelancer', 'freelancer', 'freelancer', 'freelancer', 'freelancer', 'freelancer', 'client', 'client', 'client']
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
   username = Faker::Internet.user_name
