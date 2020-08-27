@@ -5,7 +5,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins "https://arcane-woodland-react.herokuapp.com/"
+    origins "https://enigmatic-retreat-81755-react.herokuapp.com"
     resource "*", headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
   end
 end
