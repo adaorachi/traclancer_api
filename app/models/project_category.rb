@@ -3,7 +3,7 @@ class ProjectCategory < ApplicationRecord
 
   has_many :projects
 
-  validates :title, presence: true, length: { maximum: 3 }
+  validates :title, presence: true, length: { minimum: 3 }
 
   scope :project_all, -> { includes(:projects) }
 

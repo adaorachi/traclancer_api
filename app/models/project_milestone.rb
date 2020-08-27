@@ -4,6 +4,6 @@ class ProjectMilestone < ApplicationRecord
 
   has_many :milestone_subtasks
 
-  validates :title, presence: true, length: { maximum: 3 }
-  validates :description, presence: true, length: { maximum: 10 }
+  validates :title, presence: true, length: { minimum: 3 }
+  validates :description, presence: true, length: { minimum: 10 }
 end

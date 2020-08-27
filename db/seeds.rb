@@ -33,7 +33,7 @@ end
 end
 
 100.times do |_n|
-  title = Faker::Book.title[4..50].titleize
+  title = Faker::Book.title[4..30].titleize
   description = Faker::Lorem.paragraph(sentence_count: 100)
   amount = Faker::Number.number(digits: 4)
   owned_user_id = Faker::Number.within(range: 7..10)
