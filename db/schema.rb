@@ -63,8 +63,9 @@ ActiveRecord::Schema.define(version: 2020_08_25_200318) do
     t.integer "amount"
     t.integer "owned_user_id"
     t.integer "claimed_user_id"
-    t.boolean "claimed"
-    t.boolean "completed"
+    t.boolean "claimed", default: false
+    t.boolean "completed", default: false
+    t.boolean "request_share", default: false
     t.string "attachment_url"
     t.bigint "project_category_id", null: false
     t.datetime "created_at", precision: 6, null: false

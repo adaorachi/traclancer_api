@@ -1,5 +1,5 @@
 class ProjectMilestone < ApplicationRecord
-  belongs_to :project
+  belongs_to :claimed_project
   belongs_to :project_stage
 
   has_many :milestone_subtasks

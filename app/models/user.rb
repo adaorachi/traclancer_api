@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   before_save :set_user_attribute, :set_profile_image
   has_secure_password
 
-  enum status: [:freelancer, :client]
+  has_many :projects, foreign_key: 'owned_user_id', dependent: :destroy
+
+  enum status: %i[freelancer client]
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
   validates :first_name, presence: true, length: { in: 3..50 }
@@ -15,23 +19,23 @@ class User < ApplicationRecord
   validates :status, presence: true
   validates :password, presence: true, length: { maximum: 255 }
 
- private
+  private
 
   def set_user_attribute
     self.email = email.downcase
     self.username = username.downcase
     self.first_name = first_name.capitalize
     self.last_name = last_name.capitalize
-    self.password_confirmation = self.password
+    self.password_confirmation = password
   end
 
   def set_profile_image
-    avatar = gravatar_for(self.email)
+    avatar = gravatar_for(email)
     self.profile_image = avatar
   end
 
   def gravatar_for(email, size: 80)
-    gravatar_id = Digest::MD5::hexdigest(email.downcase)
+    gravatar_id = Digest::MD5.hexdigest(email.downcase)
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     gravatar_url
   end

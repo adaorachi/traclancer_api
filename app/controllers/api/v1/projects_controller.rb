@@ -10,9 +10,17 @@ module Api
       end
 
       def show
-        project = Project.find_by(id: params[:id])
+        project = Project.includes(:owned_user).find_by(id: params[:id])
+        project_data = []
+        project_data << { project: project }
+        project_data << { owned_user: project.owned_user }
+        render json: { data: project_data }
 
-        render json: ProjectSerializer.new(project).serialized_json
+        # render json: ProjectSerializer.new(project, options).serialized_json
+      end
+
+      def options
+        @options ||= { include: %i[owned_user] }
       end
 
       def create
@@ -63,7 +71,7 @@ module Api
       end
 
       def created_projects
-	@current_user = User.find_by_id(1)
+	      @current_user = User.find_by_id(1)
         created_projects = Project.created_projects(@current_user)
         render json: ProjectSerializer.new(created_projects).serialized_json
       end
@@ -78,6 +86,7 @@ module Api
             :amount,
             :owned_user_id,
             :claimed_user_id,
+	    :project_category_id,
             :claimed,
             :completed,
             :attachment_url

@@ -1,5 +1,5 @@
 class ProjectStage < ApplicationRecord
-  belongs_to :project
+  belongs_to :claimed_project
   has_many :project_milestones
 
   validates :title, presence: true, length: { minimum: 3 }
