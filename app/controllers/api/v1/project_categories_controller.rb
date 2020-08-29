@@ -3,29 +3,36 @@
 module Api
   module V1
     class ProjectCategoriesController < ApplicationController
-      def custom(array)
-        inner_obj = {}
-        inner_obj['type'] = 'project'
-        inner_obj['id'] = array.id
-        inner_obj['attributes'] = array
-        inner_obj['unclaimed_project_no'] = array.projects.where(claimed: false).count
-        inner_obj
-      end
-
       def index
-        project_categories = []
+        arr = []
         ProjectCategory.project_all.each do |project_cat|
-          all_project_category = {}
-          all_project_category['type'] = 'project'
-          all_project_category['id'] = project_cat.id
-          all_project_category['attributes'] = project_cat
-          all_project_category['unclaimed_project_no'] = project_cat.projects.where(claimed: false).count
-          project_categories << all_project_category
+          inner_obj = {}
+          inner_obj['type'] = 'project'
+          inner_obj['id'] = project_cat.id
+          inner_obj['attributes'] = project_cat
+          inner_obj['unclaimed_project_no'] = project_cat.projects.where(claimed: false).count
+          arr << inner_obj
         end
-        render json: { data: project_categories }
+        render json: { data: arr }
       end
 
-      def custom2(project_cat)
+      def show
+        project_cat = ProjectCategory.includes(:projects).find_by(slug: params[:slug])
+
+        render json: { data: get_project_assoc(project_cat) }
+      end
+
+      def options
+        @options ||= { include: %i[projects] }
+      end
+
+      private
+
+      def project_cat_params
+        params.require(:project_category).permit(:title, :description)
+      end
+
+      def get_project_assoc(project_cat)
         push_array = []
         push_array << { project_category: project_cat }
         array = []
@@ -42,22 +49,6 @@ module Api
         end
         push_array << array
         push_array
-      end
-
-      def show
-        project_cat = ProjectCategory.includes(:projects).find_by(slug: params[:slug])
-
-        render json: { data: custom2(project_cat) }
-      end
-
-      def options
-        @options ||= { include: %i[projects projects.owned_user_id] }
-      end
-
-      private
-
-      def project_cat_params
-        params.require(:project_category).permit(:title, :description)
       end
     end
   end

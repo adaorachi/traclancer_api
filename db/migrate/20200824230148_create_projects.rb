@@ -3,7 +3,7 @@ class CreateProjects < ActiveRecord::Migration[6.0]
     create_table :projects do |t|
       t.string :title
       t.text :description
-      t.integer :amount
+      t.integer :budget
       t.integer :owned_user_id
       t.string :skill_set
       t.boolean :request_share, default: false

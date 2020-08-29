@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class ProjectsController < ApplicationController
@@ -15,12 +17,6 @@ module Api
         project_data << { project: project }
         project_data << { owned_user: project.owned_user }
         render json: { data: project_data }
-
-        # render json: ProjectSerializer.new(project, options).serialized_json
-      end
-
-      def options
-        @options ||= { include: %i[owned_user] }
       end
 
       def create
@@ -53,44 +49,22 @@ module Api
         end
       end
 
-      def claimed_projects
-        claimed_projects = Project.claimed_projects(@current_user)
-        render json: ProjectSerializer.new(claimed_projects).serialized_json
-      end
-
-      def available_projects
-        project_cat = ProjectCategory.find_by(slug: params[:slug])
-        project_cat_projects = project_cat.projects.where(claimed: false, completed: false)
-        render json: ProjectSerializer.new(project_cat_projects).serialized_json
-      end
-
-      def completed_projects
-	@current_user = User.last
-        completed_projects = Project.completed_projects(@current_user)
-        render json: ProjectSerializer.new(completed_projects).serialized_json
-      end
-
-      def created_projects
-	      @current_user = User.find_by_id(1)
-        created_projects = Project.created_projects(@current_user)
-        render json: ProjectSerializer.new(created_projects).serialized_json
-      end
-
       private
+
+      def options
+        @options ||= { include: %i[owned_user] }
+      end
 
       def project_params
         params.require(:project)
-          .permit(
-            :title,
-            :description,
-            :amount,
-            :owned_user_id,
-            :claimed_user_id,
-	    :project_category_id,
-            :claimed,
-            :completed,
-            :attachment_url
-          )
+              .permit(
+                :title,
+                :description,
+                :budget,
+                :owned_user_id,
+                :project_category_id,
+                :attachment_url
+              )
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class ProjectMilestonesController < ApplicationController
@@ -8,7 +10,7 @@ module Api
       end
 
       def create
-        project_milestone = ProjectMilestone.new( project_milestone_params)
+        project_milestone = ProjectMilestone.new(project_milestone_params)
 
         if project_milestone.save
           render json: ProjectMilestoneSerializer.new(project_milestone).serialized_json
@@ -24,10 +26,7 @@ module Api
       private
 
       def project_milestone_params
-        params.require(:project_milestone)
-          .permit(
-            :title, :description, :alloted_time, :time_spent
-          )
+        params.require(:project_milestone).permit(:title, :description, :alloted_time, :time_spent)
       end
     end
   end

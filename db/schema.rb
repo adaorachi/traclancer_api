@@ -15,6 +15,18 @@ ActiveRecord::Schema.define(version: 2020_08_25_200318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "claimed_projects", force: :cascade do |t|
+    t.integer "claimed_user_id"
+    t.boolean "claimed", default: false
+    t.boolean "completed", default: false
+    t.time "time_spent"
+    t.float "rate"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_claimed_projects_on_project_id"
+  end
+
   create_table "milestone_subtasks", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -37,34 +49,31 @@ ActiveRecord::Schema.define(version: 2020_08_25_200318) do
     t.text "description"
     t.time "alloted_time"
     t.time "time_spent"
-    t.bigint "project_id", null: false
+    t.bigint "claimed_project_id", null: false
     t.bigint "project_stage_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_project_milestones_on_project_id"
+    t.index ["claimed_project_id"], name: "index_project_milestones_on_claimed_project_id"
     t.index ["project_stage_id"], name: "index_project_milestones_on_project_stage_id"
   end
 
   create_table "project_stages", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.float "rate"
     t.boolean "share"
     t.time "estimated_time"
-    t.bigint "project_id", null: false
+    t.bigint "claimed_project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["project_id"], name: "index_project_stages_on_project_id"
+    t.index ["claimed_project_id"], name: "index_project_stages_on_claimed_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "amount"
+    t.integer "budget"
     t.integer "owned_user_id"
-    t.integer "claimed_user_id"
-    t.boolean "claimed", default: false
-    t.boolean "completed", default: false
+    t.string "skill_set"
     t.boolean "request_share", default: false
     t.string "attachment_url"
     t.bigint "project_category_id", null: false
@@ -78,16 +87,17 @@ ActiveRecord::Schema.define(version: 2020_08_25_200318) do
     t.string "last_name"
     t.string "email"
     t.string "username"
+    t.integer "status"
     t.string "profile_image"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "status"
   end
 
+  add_foreign_key "claimed_projects", "projects"
   add_foreign_key "milestone_subtasks", "project_milestones"
+  add_foreign_key "project_milestones", "claimed_projects"
   add_foreign_key "project_milestones", "project_stages"
-  add_foreign_key "project_milestones", "projects"
-  add_foreign_key "project_stages", "projects"
+  add_foreign_key "project_stages", "claimed_projects"
   add_foreign_key "projects", "project_categories"
 end

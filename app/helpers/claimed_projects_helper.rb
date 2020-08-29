@@ -1,0 +1,2 @@
+module ClaimedProjectsHelper
+end
