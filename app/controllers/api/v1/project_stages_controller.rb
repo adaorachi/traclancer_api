@@ -27,7 +27,7 @@ module Api
       def project_stage_params
         params.require(:project_stage)
           .permit(
-            :title, :description, :rate, :share, :estimated_time
+            :title, :description, :rate, :share, :estimated_time, :claimed_project_id
           )
       end
     end

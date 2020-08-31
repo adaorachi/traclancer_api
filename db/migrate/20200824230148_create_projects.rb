@@ -7,6 +7,8 @@ class CreateProjects < ActiveRecord::Migration[6.0]
       t.integer :owned_user_id
       t.string :skill_set
       t.boolean :request_share, default: false
+      t.boolean :claimed, default: false
+      t.boolean :completed, default: false
       t.string :attachment_url
       t.belongs_to :project_category, null: false, foreign_key: true
 

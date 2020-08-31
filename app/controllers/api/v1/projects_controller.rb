@@ -32,10 +32,10 @@ module Api
       def update
         project = Project.find_by(id: params[:id])
 
-        if project.update(project_params)
+        if project.update_column(:claimed, true)
           render json: ProjectSerializer.new(project).serialized_json
         else
-          render json: { error: project.errors.full_message, status: 422 }
+          render json: { error: ['Cannot update claimed  status'], status: 422 }
         end
       end
 
@@ -62,6 +62,8 @@ module Api
                 :description,
                 :budget,
                 :owned_user_id,
+                :completed,
+                :claimed,
                 :project_category_id,
                 :attachment_url
               )

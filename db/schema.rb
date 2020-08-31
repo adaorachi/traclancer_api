@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_200318) do
+ActiveRecord::Schema.define(version: 2020_08_31_152429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "claimed_project_stats", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "record_time"
+    t.integer "bigint"
+    t.integer "project_stage"
+    t.bigint "claimed_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["claimed_project_id"], name: "index_claimed_project_stats_on_claimed_project_id"
+  end
 
   create_table "claimed_projects", force: :cascade do |t|
     t.integer "claimed_user_id"
@@ -75,6 +87,8 @@ ActiveRecord::Schema.define(version: 2020_08_25_200318) do
     t.integer "owned_user_id"
     t.string "skill_set"
     t.boolean "request_share", default: false
+    t.boolean "claimed", default: false
+    t.boolean "completed", default: false
     t.string "attachment_url"
     t.bigint "project_category_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -94,6 +108,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_200318) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "claimed_project_stats", "claimed_projects"
   add_foreign_key "claimed_projects", "projects"
   add_foreign_key "milestone_subtasks", "project_milestones"
   add_foreign_key "project_milestones", "claimed_projects"

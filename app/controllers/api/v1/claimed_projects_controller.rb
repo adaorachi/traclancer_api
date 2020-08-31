@@ -3,6 +3,32 @@
 module Api
   module V1
     class ClaimedProjectsController < ApplicationController
+      include CurrentUserConcern
+
+      def index
+        claimed_project = ClaimedProject.includes(:project_stages).includes(:project_milestones).where(claimed_user_id: @current_user.id)
+        array = []
+        claimed_project.each do |proj|
+          inner_obj = {}
+          inner_obj['attributes'] = proj
+          inner_obj['projects'] = proj.project
+          inner_obj['project_stages'] = proj.project_stages
+          inner_obj['owned_user'] = proj.project.owned_user
+          array << inner_obj
+        end
+
+        render json: { data: array }
+      end
+
+      def show
+        claimed_project = ClaimedProject.includes(:project_stages).includes(:project_milestones).find_by(id: params[:id])
+        array = []
+        array << { claimed_projects: claimed_project }
+        array << { project_stages: claimed_project.project_stages }
+        array << { project_milestones: claimed_project.project_milestones }
+        render json: { data: array }
+      end
+
       def create
         claimed_project = ClaimedProject.new(project_claimed_params)
 
@@ -12,8 +38,6 @@ module Api
           render json: { error: claimed_project.errors.full_message, status: 422 }
         end
       end
-
-      def show; end
 
       def update
         claimed_project = ClaimedProject.find_by(id: params[:id])
@@ -27,8 +51,10 @@ module Api
 
       def delete; end
 
+      private
+
       def project_claimed_params
-        params.require(:project).permit(:claimed_user_id, :project_id, :claimed, :completed, :time_spent, :rate)
+        params.require(:claimed_project).permit(:claimed_user_id, :project_id, :claimed, :completed, :time_spent, :rate)
       end
     end
   end

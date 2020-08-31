@@ -8,7 +8,8 @@ Rails.application.routes.draw do
       get :logged_in, to: 'sessions#logged_in'
 
       resources :projects, except: [:index]
-      resources :claimed_projects, except: [:index, :show]
+      resources :claimed_projects
+      resources :claimed_project_stats
       resources :project_categories, param: :slug
       resources :project_stages, only: %i[show create]
       resources :project_milestones, only: %i[show create]

@@ -36,14 +36,13 @@ module Api
         push_array = []
         push_array << { project_category: project_cat }
         array = []
-        project_cat.projects.each do |cat|
-          cats = Project.includes(:owned_user).where(
-            owned_user_id: cat.owned_user_id,
-            id: cat.id,
+ 	cats = Project.where(
+            project_category_id: project_cat.id,
             claimed: false,
             completed: false)
+        cats.each do |cat|
           inner_obj = {}
-          inner_obj['attributes'] = cats[0]
+          inner_obj['attributes'] = cat
           inner_obj['owned_user'] = cat.owned_user
           array << inner_obj
         end

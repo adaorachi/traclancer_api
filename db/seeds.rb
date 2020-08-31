@@ -32,13 +32,11 @@ end
   description = Faker::Lorem.paragraph(sentence_count: 100)
   budget = Faker::Number.number(digits: 4)
   owned_user_id = Faker::Number.within(range: 7..10)
-  attachment_url = nil
   project_category_id = Faker::Number.within(range: 1..6)
 
   Project.create!(title: title,
                   description: description,
                   budget: budget,
                   owned_user_id: owned_user_id,
-                  attachment_url: attachment_url,
                   project_category_id: project_category_id)
 end
