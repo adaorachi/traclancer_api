@@ -28,6 +28,7 @@ gem 'rubocop', '~>0.81.0'
 gem 'faker'
 # gem "active_model_serializers", require: true
 gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
+gem 'jwt'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
