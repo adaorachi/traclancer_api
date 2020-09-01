@@ -37,7 +37,6 @@ module Api
       def project_claimed_stats_params
         params.require(:claimed_project_stat).permit(:record_time, :claimed_project, :project_stage)
       end
-
     end
   end
 end

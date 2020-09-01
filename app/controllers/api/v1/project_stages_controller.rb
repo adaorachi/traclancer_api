@@ -7,7 +7,6 @@ module Api
         render json: ProjectStageSerializer.new(project_stage, options).serialized_json
       end
 
-
       def create
         project_stage = ProjectStage.new(project_stage_params)
 

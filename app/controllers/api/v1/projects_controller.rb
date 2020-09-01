@@ -57,16 +57,16 @@ module Api
 
       def project_params
         params.require(:project)
-              .permit(
-                :title,
-                :description,
-                :budget,
-                :owned_user_id,
-                :completed,
-                :claimed,
-                :project_category_id,
-                :attachment_url
-              )
+          .permit(
+            :title,
+            :description,
+            :budget,
+            :owned_user_id,
+            :completed,
+            :claimed,
+            :project_category_id,
+            :attachment_url
+          )
       end
     end
   end

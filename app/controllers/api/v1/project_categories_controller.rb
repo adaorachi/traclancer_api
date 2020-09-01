@@ -36,10 +36,11 @@ module Api
         push_array = []
         push_array << { project_category: project_cat }
         array = []
- 	cats = Project.where(
-            project_category_id: project_cat.id,
-            claimed: false,
-            completed: false)
+        cats = Project.where(
+          project_category_id: project_cat.id,
+          claimed: false,
+          completed: false
+        )
         cats.each do |cat|
           inner_obj = {}
           inner_obj['attributes'] = cat
