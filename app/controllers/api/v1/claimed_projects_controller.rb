@@ -4,7 +4,7 @@ module Api
       ## include CurrentUserConcern
 
       def index
-        claimed_project = ClaimedProject.includes(:project_stages).includes(:project_milestones).where(claimed_user_id: session_user.id)
+        claimed_project = ClaimedProject.includes(:project_stages).includes(:project_milestones).includes(:claimed_project_stats).where(claimed_user_id: session_user.id)
         array = []
         claimed_project.each do |proj|
           inner_obj = {}
@@ -12,6 +12,7 @@ module Api
           inner_obj['projects'] = proj.project
           inner_obj['project_stages'] = proj.project_stages
           inner_obj['owned_user'] = proj.project.owned_user
+	  inner_obj['project_stats'] = proj.claimed_project_stats
           array << inner_obj
         end
 

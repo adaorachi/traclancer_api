@@ -3,7 +3,7 @@ class CreateClaimedProjectStats < ActiveRecord::Migration[6.0]
     create_table :claimed_project_stats do |t|
       t.datetime :start_time
       t.datetime :end_time
-      t.integer :record_time, :bigint
+      t.integer :record_time
       t.integer :project_stage
       t.references :claimed_project, null: false, foreign_key: true
 

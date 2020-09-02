@@ -10,7 +10,7 @@ module Api
       end
 
       def create
-        claimed_project_stat = ClaimedProjectStat.new(project_claimed_stats_params)
+        claimed_project_stat = ClaimedProjectStat.new(record_time: params[:record_time], claimed_project_id: params[:claimed_project_id])
         claimed_project_stat.start_time = Time.now
 
         if claimed_project_stat.save
@@ -21,12 +21,12 @@ module Api
       end
 
       def update
-        claimed_project_stat = ClaimedProjectStat.find_by(id: params[:id])
+        claimed_project_stat = ClaimedProjectStat.last
         claimed_project_stat.end_time = Time.now
 
-        if claimed_project_stat.update(project_claimed_stats_params)
+        if claimed_project_stat.update(record_time: params[:record_time], project_stage: params[:project_stage])
           claimed_project_stat.update_column(:end_time, Time.now)
-          render json: ClaimedProjectSerializer.new(claimed_project_stat).serialized_json
+          render json: ClaimedProjectStatSerializer.new(claimed_project_stat).serialized_json
         else
           render json: { error: claimed_project_stat.errors.full_message, status: 422 }
         end
@@ -35,7 +35,7 @@ module Api
       private
 
       def project_claimed_stats_params
-        params.require(:claimed_project_stat).permit(:record_time, :claimed_project, :project_stage)
+        params.require(:claimed_project_stat).permit(:record_time, :claimed_project_id, :project_stage)
       end
     end
   end

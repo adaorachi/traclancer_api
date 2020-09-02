@@ -19,14 +19,22 @@
 end
 
 6.times do |_n|
-  title = "Web Design with #{Faker::ProgrammingLanguage.name.titleize}"
+  title = "Web Development with #{Faker::ProgrammingLanguage.name.titleize}"
   description = Faker::Lorem.paragraph(sentence_count: 10)
   ProjectCategory.create!(title: title,
                           description: description)
 end
 
-100.times do |_n|
-  title = Faker::Book.title[4..30].titleize
+def title(title_name, num)
+  if num.even?
+    "Build a #{title_name} app for my company"
+  else
+    "I need a #{title_name} for my site"
+  end
+end
+
+50.times do |n|
+  title = title(Faker::App.name.titleize, n)
   description = Faker::Lorem.paragraph(sentence_count: 100)
   budget = Faker::Number.number(digits: 4)
   owned_user_id = Faker::Number.within(range: 7..10)
