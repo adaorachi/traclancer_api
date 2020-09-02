@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   before_action :require_login
@@ -37,8 +35,6 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    unless logged_in?
-      render json: { message: 'Please Login' }, status: :unauthorized
-    end
+    render json: { message: 'Please Login' }, status: :unauthorized unless logged_in?
   end
 end

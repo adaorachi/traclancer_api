@@ -11,7 +11,7 @@ module Api
             user: user,
             status: :created,
             logged_in: true,
-            jwt: token,
+            jwt: token
           }
         else
           render json: { status: 422, logged_in: false, error: user.errors.full_messages }

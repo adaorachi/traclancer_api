@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 module Api
   module V1
     class ClaimedProjectsController < ApplicationController
-       ## include CurrentUserConcern
+      ## include CurrentUserConcern
 
       def index
         claimed_project = ClaimedProject.includes(:project_stages).includes(:project_milestones).where(claimed_user_id: session_user.id)

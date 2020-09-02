@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Project < ApplicationRecord
   belongs_to :project_category
   belongs_to :owned_user, class_name: 'User'
