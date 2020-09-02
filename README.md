@@ -56,10 +56,13 @@ rails db:migrate
 rspec
 ```
 
+- Populate Database with data:
+
+```
 rails db:seed
 ```
 
-- That's it, you app is lock and loaded!
+- That's it, lastly start the server!
 
 ```
 rails s
@@ -84,7 +87,7 @@ local storage (no cookies):
 
 The following routes are available for authorization:
 
-- `POST /api/v1/login
+- `POST /api/v1/login`
 - `GET /api/v1/logout`
 - `POST /api/v1/registrations`
 
@@ -122,7 +125,7 @@ The following routes are available for authorization:
 
 ## Live Version
 
-This is the link to the live preview in Heroku. Consist of the base URL<br>
+This is the link to the live preview in Heroku. Consist of the base URL - 
 [Traclancer Tracking App](https://enigmatic-retreat-81755.herokuapp.com)<br>
 
 <!-- CONTACT -->
