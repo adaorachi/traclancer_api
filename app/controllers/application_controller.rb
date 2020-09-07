@@ -1,3 +1,5 @@
+# rubocop:disable Style/GuardClause
+
 class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   before_action :require_login
@@ -31,10 +33,12 @@ class ApplicationController < ActionController::Base
   end
 
   def logged_in?
-    !!session_user
+    !session_user.nil?
   end
 
   def require_login
     render json: { message: 'Please Login' }, status: :unauthorized unless logged_in?
   end
 end
+
+# rubocop:enable Style/GuardClause

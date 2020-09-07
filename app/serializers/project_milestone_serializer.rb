@@ -1,7 +1,4 @@
-class ProjectMilestoneSerializer
-  include FastJsonapi::ObjectSerializer
-  set_type :project_milestone
-  set_id :id
+class ProjectMilestoneSerializer < ActiveModel::Serializer
   attributes :title, :description, :alloted_time, :time_spent
 
   belongs_to :claimed_project

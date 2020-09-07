@@ -3,9 +3,9 @@
 
 10.times do |n|
   enum = %w[freelancer freelancer freelancer freelancer freelancer freelancer freelancer client client client client]
-  first_name = Faker::Name.first_name
-  last_name = Faker::Name.last_name
-  username = Faker::Internet.user_name
+  first_name = Faker::Name.first_name[4..7]
+  last_name = Faker::Name.last_name[4..7]
+  username = Faker::Internet.user_name[4..10]
   status = enum[n]
   email = "example-#{n + 1}@railstutorial.org"
   password = 'password'

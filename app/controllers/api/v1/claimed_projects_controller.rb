@@ -1,3 +1,5 @@
+# rubocop:disable Layout/LineLength
+
 module Api
   module V1
     class ClaimedProjectsController < ApplicationController
@@ -12,7 +14,7 @@ module Api
           inner_obj['projects'] = proj.project
           inner_obj['project_stages'] = proj.project_stages
           inner_obj['owned_user'] = proj.project.owned_user
-	  inner_obj['project_stats'] = proj.claimed_project_stats
+          inner_obj['project_stats'] = proj.claimed_project_stats
           array << inner_obj
         end
 
@@ -32,7 +34,7 @@ module Api
         claimed_project = ClaimedProject.new(project_claimed_params)
 
         if claimed_project.save
-          render json: ClaimedProjectSerializer.new(claimed_project).serialized_json
+          render json: claimed_project, serializer: ClaimedProjectSerializer
         else
           render json: { error: claimed_project.errors.full_message, status: 422 }
         end
@@ -58,3 +60,4 @@ module Api
     end
   end
 end
+# rubocop:enable Layout/LineLength

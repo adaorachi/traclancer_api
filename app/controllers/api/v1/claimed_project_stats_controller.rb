@@ -1,3 +1,5 @@
+# rubocop:disable Layout/LineLength
+
 module Api
   module V1
     class ClaimedProjectStatsController < ApplicationController
@@ -14,7 +16,7 @@ module Api
         claimed_project_stat.start_time = Time.now
 
         if claimed_project_stat.save
-          render json: ClaimedProjectStatSerializer.new(claimed_project_stat).serialized_json
+          render json: claimed_project_stat, serializer: ClaimedProjectStatSerializer
         else
           render json: { error: claimed_project_stat.errors.full_message, status: 422 }
         end
@@ -26,7 +28,7 @@ module Api
 
         if claimed_project_stat.update(record_time: params[:record_time], project_stage: params[:project_stage])
           claimed_project_stat.update_column(:end_time, Time.now)
-          render json: ClaimedProjectStatSerializer.new(claimed_project_stat).serialized_json
+          render json: claimed_project_stat, serializer: ClaimedProjectStatSerializer
         else
           render json: { error: claimed_project_stat.errors.full_message, status: 422 }
         end
@@ -40,3 +42,5 @@ module Api
     end
   end
 end
+
+# rubocop:enable Layout/LineLength

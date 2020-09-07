@@ -22,13 +22,14 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 gem 'faker'
+gem 'jwt'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rubocop', '~>0.81.0'
-# gem "active_model_serializers", require: true
-gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
-gem 'jwt'
+
+# gem 'fast_jsonapi', '~> 1.1', '>= 1.1.1'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -39,10 +40,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'rspec-rails', '~> 3.5'
-  gem 'factory_bot_rails', '~> 4.0'
-  gem 'shoulda-matchers', '~> 3.1'
   gem 'database_cleaner'
+  gem 'factory_bot_rails', '~> 4.0'
+  gem 'rspec-rails', '~> 3.5'
+  gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :development do

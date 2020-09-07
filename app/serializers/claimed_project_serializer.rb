@@ -1,7 +1,4 @@
-class ClaimedProjectSerializer
-  include FastJsonapi::ObjectSerializer
-  set_type :claimed_project
-  set_id :id
+class ClaimedProjectSerializer < ActiveModel::Serializer
   attributes :claimed_user_id, :claimed, :completed, :time_spent, :rate
 
   belongs_to :claimed_user, key: :user

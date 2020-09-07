@@ -1,7 +1,4 @@
-class MilestoneSubtaskSerializer
-  include FastJsonapi::ObjectSerializer
-  set_type :milestone_subtasks
-  set_id :id
+class MilestoneSubtaskSerializer < ActiveModel::Serializer
   attributes :title, :description
 
   belongs_to :project_milestone

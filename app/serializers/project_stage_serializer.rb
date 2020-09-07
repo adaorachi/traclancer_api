@@ -1,7 +1,4 @@
-class ProjectStageSerializer
-  include FastJsonapi::ObjectSerializer
-  set_type :project_stage
-  set_id :id
+class ProjectStageSerializer < ActiveModel::Serializer
   attributes :title, :description, :share, :estimated_time
 
   belongs_to :claimed_project

@@ -1,8 +1,7 @@
-class ProjectCategorySerializer
-  include FastJsonapi::ObjectSerializer
-  set_type :project_category
-  set_id :id
-  attributes :title, :description, :slug
+class ProjectCategorySerializer < ActiveModel::Serializer
+  attributes :id, :title, :description, :slug
 
-  has_many :projects
+  has_many :projects do
+    object.projects.where(claimed: false)
+  end
 end

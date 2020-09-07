@@ -1,9 +1,7 @@
-class ProjectSerializer
-  include FastJsonapi::ObjectSerializer
-  set_type :project
-  set_id :id
-  attributes :title, :description, :budget, :owned_user_id, :completed, :claimed, :attachment_url, :created_at
+class ProjectSerializer < ActiveModel::Serializer
+  attributes :id, :title, :description, :budget, :owned_user_id, :completed, :claimed, :attachment_url, :created_at
 
-  belongs_to :owned_user, key: :user
-  has_one :claimed_project
+  attribute :owned_user do
+    object.owned_user
+  end
 end
