@@ -21,7 +21,8 @@ module Api
         project = Project.new(project_params)
 
         if project.save
-          render json: ProjectSerializer.new(project).serialized_json
+          render json: project, serializer: ProjectSerializer
+          # render json: ProjectSerializer.new(project).serialized_json
         else
           render json: { error: project.errors.full_message, status: 422 }
         end
